@@ -27,17 +27,35 @@ def check_strength(password):
     else:
         print ("Password should contain atleast one special character")
     return strength
+# Checks if a password is in the common password list of 25 passwords
 def commonPassword(password):
     with open("compass.txt", "r") as file:
         common_passwords = file.read().splitlines()
     if password in common_passwords:
-       print("Password is commonly used. Please choose a different password.")
+       return True
     else:
-        print("Password is not in the common password list.")
+        return False
+# Scores the password based on strength
+def score(password):
+    strength = check_strength(password)
+    if strength == 4:
+        print("Password is strong")
+    elif strength == 3:
+        print("Password is moderate")
+    else:
+        print("Password is weak")
+#if it is a common password it should not be accepted
+def cancel_out(password):
+    if commonPassword(password) == True:
+        print("Password is commonly used. Please choose a different password.")
+    else: 
+        check_strength(password)
+
+      
 def main():
     password = input("Enter your password: ")
-    check_strength(password)
-    commonPassword(password)   
+    cancel_out(password)
+      
 if __name__ == "__main__":
     main()
  
