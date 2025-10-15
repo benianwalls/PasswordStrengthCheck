@@ -13,7 +13,7 @@ def check_strength(password):
     if len(password) >= 8:
         strength += 1
     else:
-        print ("Password length should be greater than 8")
+        print ("Password length should be 8 or more characters")
     if re.search("[a-z]", password) and re.search("[A-Z]", password):
         strength += 1
     else:
@@ -39,23 +39,23 @@ def commonPassword(password):
 def score(password):
     strength = check_strength(password)
     if strength == 4:
-        print("Password is strong")
+        print("Password is strong.")
     elif strength == 3:
-        print("Password is moderate")
+        print("Password is moderate.")
     else:
-        print("Password is weak")
+        print("Password is weak.")
 #if it is a common password it should not be accepted
 def cancel_out(password):
     if commonPassword(password) == True:
         print("Password is commonly used. Please choose a different password.")
     else: 
-        check_strength(password)
-
-      
+        score(password)
+       
+#Grabs password from user 
 def main():
     password = input("Enter your password: ")
     cancel_out(password)
-      
+#calls main function
 if __name__ == "__main__":
     main()
  
