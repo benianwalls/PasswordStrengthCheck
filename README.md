@@ -1,7 +1,7 @@
 # PasswordStrengthCheck
 Checks if a user has a weak, moderate, or strong password by going through a variety of tests
 Also has support to check if a password has been compromised using haveibeenpwned API
-Strength rules
+# Strength rules
 - Password length > 8
 - Letter case - contains both uppercase and lowercase letters
 - Numbers - contains atleast one digit
