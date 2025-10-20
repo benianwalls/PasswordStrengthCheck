@@ -1,4 +1,7 @@
 import re
+import hashlib
+import requests
+
 # Strength rules
 
 # Password length > 8
@@ -50,11 +53,36 @@ def cancel_out(password):
         print("Password is commonly used. Please choose a different password.")
     else: 
         score(password)
+
+# Incorpatee getPawned API to check if password has been compromised
+def pwned_check(password):
+    sha1_password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
+    first5_char, tail = sha1_password[:5], sha1_password[5:]
+    url = f"https://api.pwnedpasswords.com/range/{first5_char}"
+    response = requests.get(url)
+    if response.status_code != 200:
+        raise RuntimeError(f"Error fetching: {response.status_code}, check the API and try again.")
+    hashes = (line.split(':') for line in response.text.splitlines())
+    for h, count in hashes:
+        if h == tail:
+            return int(count)
+    return 0
        
 #Grabs password from user 
 def main():
+    choice = input("Enter 1 to check password strength or 2 to check if password has been compromised: ")
     password = input("Enter your password: ")
-    cancel_out(password)
+    if choice == '1':
+        cancel_out(password)
+    elif choice == '2':
+        count = pwned_check(password)
+        if count:
+            print(f"Password has been compromised {count} times! Please choose a different password.")
+        else:
+            print("Password has not been found in any data breaches.")
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
+    
 #calls main function
 if __name__ == "__main__":
     main()
