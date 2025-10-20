@@ -16,19 +16,19 @@ def check_strength(password):
     if len(password) >= 8:
         strength += 1
     else:
-        print ("Password length should be 8 or more characters")
+        print ("Password length should be 8 or more characters.")
     if re.search("[a-z]", password) and re.search("[A-Z]", password):
         strength += 1
     else:
-        print ("Password should contain both uppercase and lowercase letters")
+        print ("Password should contain both uppercase and lowercase letters.")
     if re.search("[0-9]", password):
         strength += 1
     else:
-        print ("Password should contain atleast one digit")
+        print ("Password should contain atleast one digit.")
     if re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
         strength += 1
     else:
-        print ("Password should contain atleast one special character")
+        print ("Password should contain atleast one special character.")
     return strength
 # Checks if a password is in the common password list of 25 passwords
 def commonPassword(password):
@@ -70,18 +70,14 @@ def pwned_check(password):
        
 #Grabs password from user 
 def main():
-    choice = input("Enter 1 to check password strength or 2 to check if password has been compromised: ")
     password = input("Enter your password: ")
-    if choice == '1':
-        cancel_out(password)
-    elif choice == '2':
+    if pwned_check(password) > 0:
         count = pwned_check(password)
-        if count:
-            print(f"Password has been compromised {count} times! Please choose a different password.")
-        else:
-            print("Password has not been found in any data breaches.")
+        print(f"Password has been compromised {count} times! Please choose a different password.")
     else:
-        print("Invalid choice. Please enter 1 or 2.")
+        cancel_out(password)
+        print("Password has not been found in any data breaches.")
+    
     
 #calls main function
 if __name__ == "__main__":
