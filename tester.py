@@ -30,14 +30,7 @@ def check_strength(password):
     else:
         print ("Password should contain atleast one special character.")
     return strength
-# Checks if a password is in the common password list of 25 passwords
-def commonPassword(password):
-    with open("compass.txt", "r") as file:
-        common_passwords = file.read().splitlines()
-    if password in common_passwords:
-       return True
-    else:
-        return False
+
 # Scores the password based on strength
 def score(password):
     strength = check_strength(password)
@@ -47,12 +40,7 @@ def score(password):
         print("Password is moderate.")
     else:
         print("Password is weak.")
-#if it is a common password it should not be accepted
-def cancel_out(password):
-    if commonPassword(password) == True:
-        print("Password is commonly used. Please choose a different password.")
-    else: 
-        score(password)
+
 
 # Incorpatee getPawned API to check if password has been compromised
 def pwned_check(password):
@@ -75,7 +63,7 @@ def main():
         count = pwned_check(password)
         print(f"Password has been compromised {count} times! Please choose a different password.")
     else:
-        cancel_out(password)
+        score(password)
         print("Password has not been found in any data breaches.")
     
     
